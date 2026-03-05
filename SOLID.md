@@ -1,4 +1,7 @@
 # SOLID
+SOLID principles are object-oriented design principles that help you write clean, maintainable, scalable code
+especially important when controllers, models, and services start growing.
+
 S — Single Responsibility Principle (SRP) <br>
 O — Open/Closed Principle (OCP) <br>
 L — Liskov Substitution Principle (LSP) <br>
@@ -59,6 +62,38 @@ end
 ## L — Liskov Substitution Principle (LSP)
 - Subclasses should be replaceable with their parent class without breaking behavior. <br>
 - LSP means a subclass should be able to replace its parent class without breaking the program. The child class should follow the same behavior contract as the parent. <br>
+
+Bad Code: 
+```Ruby
+class Bird
+ def fly
+  "Flying"
+ end
+end
+
+class Penguin < Bird
+ def fly
+  raise "Penguins can't fly"
+ end
+end
+```
+Penguin breaks parent behavior. <br>
+
+Good Code: 
+```Ruby
+class Bird
+end
+
+class FlyingBird < Bird
+ def fly
+  "Flying"
+ end
+end
+
+class Penguin < Bird
+end
+```
+Now no broken behavior.
 
 ## I — Interface Segregation Principle (ISP)
 - Clients should not depend on methods they don't use.
@@ -151,9 +186,34 @@ OrderService.new(fake_gateway).process
 
 
 # Interview Questions
-→ How do you apply SOLID in Rails?
+### How do you apply SOLID in Rails?
 * I keep models skinny by extracting business logic into service objects (SRP).
 * I use polymorphism instead of conditionals (OCP).
 * I ensure subclasses respect parent contracts (LSP).
 * I split large concerns into smaller modules (ISP).
 * I inject dependencies instead of tightly coupling classes (DIP).
+
+### What is Duck Typing?
+
+Duck typing means Ruby doesn’t check the object’s type. It only checks if the object responds to the required method. If it behaves correctly, it works. <br>
+**Example**:-
+```Ruby
+class Dog
+  def speak
+    "Woof"
+  end
+end
+
+class Cat
+  def speak
+    "Meow"
+  end
+end
+
+def make_sound(animal)
+  animal.speak
+end
+
+puts make_sound(Dog.new)
+puts make_sound(Cat.new)
+```
